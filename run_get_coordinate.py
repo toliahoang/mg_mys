@@ -18,8 +18,8 @@ EVENT_TYPE = "GAME"
 
 
 """Test OCR"""
-my_var_name,coordinate_elim = get_relative_coord_one_times(FULL_PATH, EVENT_TYPE)
+my_var_name,coordinate_elim = get_relative_coord_one_times(FULL_PATH, EVENT_TYPE, save_txt=True)
 params = {'white_list': ["^.*(?i)g[a-zA-Z]me.*$", "^.*(?i)mission updated.*$", "^.*(?i)tim snared.*$",
-                         "^.*(?i)blood collected.*$"], 'black_list': [], 'mode': 'img2data_easyocr'}
+                         "^.*(?i)blood collected.*$"], 'black_list': [], 'mode': 'img2str_easyocr'}
 
 test_by_easyocr(PATH, coordinate_elim=coordinate_elim, params=params)

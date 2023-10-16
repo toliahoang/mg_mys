@@ -72,7 +72,7 @@ def load_coord_txt(path):
     return (int(w), int(h), int(x), int(y) ,int(delta_x), int(delta_y))
 
 
-def get_relative_coord_one_times(full_path, EVENT_TYPE):
+def get_relative_coord_one_times(full_path, EVENT_TYPE, save_txt=False):
     get_delta = load_coord_txt(full_path)[2:]
     w, h = load_coord_txt(full_path)[:2]
     frame_size = (w, h)
@@ -80,6 +80,11 @@ def get_relative_coord_one_times(full_path, EVENT_TYPE):
     # my_var_name = [ k for k,v in locals().items() if v == EVENT_TYPE][0]
     my_var_name = EVENT_TYPE
     print("{} {}".format(my_var_name,coordinate_elim))
+    coordinate_elim_str = [str(i) for i in coordinate_elim]
+    coordinate_elim_str = ",".join(list(coordinate_elim_str))
+    if save_txt:
+        with open("{}".format("target_folder/coordinate_relative.txt"), "w") as f:
+            f.write(coordinate_elim_str)
     return (my_var_name,coordinate_elim)
 
 
@@ -105,34 +110,44 @@ def check_bound_box_images(path, EVENT_TYPE):
         draw_reg(full, coordinate_elim)
 
 
+class WriteRead:
+    def __init__(self, source_folder, target_folder, filename):
+        self.source_folder = source_folder
+        self.target_folder = target_folder
+        self.filename = filename
+        self.full_path = os.path.join(self.target_folder, self.filename)
+
+    def write_file(self, message):
+        with open("{}".format(self.full_path), "w") as f:
+            f.write(json.dumps(message))
+
+    def read_file(self):
+        with open("{}".format(self.full_path), "r") as f:
+            content = f.read()
+            content = content.strip()
+            list_content = content.split(",")
+        list_content = [float(i) for i in list_content]
+        return list_content
+
+
+
+
+
+
+
+
+
+
+
+
+
 # path = "C:/Users/DELL/Downloads/super_smart_pro"
 # path = "C:/Users/DELL/Downloads/nba2k23/label_doc"
 # full_path =  path + "/" + "coord.txt"
 # frame_size = (1224,686)
 # EVENT_TYPE = "GAME"
-
 # my_var_name,coordinate_elim = get_relative_coord_one_times(full_path, EVENT_TYPE)
-
-
 # check_bound_box_images(path, EVENT_TYPE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
