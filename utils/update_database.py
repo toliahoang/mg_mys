@@ -36,11 +36,11 @@ class Singleton(metaclass=SingletonMeta):
         self.conn.close()
 
     def insert_db(self, sql):
-        # try:
-        self.cursor.execute(sql)
-        self.conn.commit()
-        # except :
-        self.conn.rollback()
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except :
+            self.conn.rollback()
         self.conn.close()
 
 
